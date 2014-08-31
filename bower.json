@@ -1,0 +1,39 @@
+{
+  "name": "lil-all",
+  "description": "All-in-one lil' library bundle",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "lil-js/all",
+  "author": "Tomas Aparicio",
+  "main": "./http.js",
+  "keywords": [
+    "lil",
+    "tiny",
+    "micro",
+    "http",
+    "request",
+    "xhr",
+    "ajax",
+    "https",
+    "agent"
+  ],
+  "ignore": [
+    "**/.*",
+    ".*",
+    "*.md",
+    "*.sh",
+    "test",
+    "Makefile",
+    ".editorconfig",
+    ".gitignore",
+    ".travis.yml",
+    ".npmignore",
+    "package.json",
+    "component.json"
+  ],
+  "dependencies": {
+    "lil-http": "~0.1.0",
+    "lil-type": "~0.1.0"
+  }
+}
+

@@ -1,0 +1,25 @@
+{
+  "name": "lil-all",
+  "description": "All-in-one lil' library bundle",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "lil-js/all",
+  "author": "Tomas Aparicio",
+  "license": "MIT",
+  "scripts": [
+    "lil.js",
+    "lil.min.js"
+  ],
+  "keywords": [
+    "lil",
+    "tiny",
+    "micro",
+    "http",
+    "request",
+    "xhr",
+    "ajax",
+    "https",
+    "agent"
+  ]
+}
+
