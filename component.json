@@ -23,7 +23,8 @@
   ],
   "dependencies": {
     "lil-js/http": "~0.1.0",
-    "lil-js/type": "~0.1.0"
+    "lil-js/type": "~0.1.0",
+    "lil-js/uri": "~0.1.0"
   }
 }
 
