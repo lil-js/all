@@ -1,6 +1,6 @@
 {
-  "name": "lil-all",
-  "description": "All-in-one lil' library bundle",
+  "name": "lil",
+  "description": "All-in-one Lil'JS modules",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "lil-js/all",
@@ -10,12 +10,9 @@
     "lil",
     "tiny",
     "micro",
-    "http",
-    "request",
-    "xhr",
-    "ajax",
-    "https",
-    "agent"
+    "library",
+    "modules",
+    "bundle"
   ],
   "ignore": [
     "**/.*",
@@ -23,6 +20,7 @@
     "*.md",
     "*.sh",
     "test",
+    "lib",
     "Makefile",
     ".editorconfig",
     ".gitignore",
@@ -31,7 +29,7 @@
     "package.json",
     "component.json"
   ],
-  "dependencies": {
+  "devDependencies": {
     "lil-http": "~0.1.0",
     "lil-type": "~0.1.0",
     "lil-uri": "~0.1.0"

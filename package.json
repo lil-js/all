@@ -1,0 +1,28 @@
+{
+  "name": "lil-http",
+  "description": "All-in-one Lil'JS modules",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Tomas Aparicio",
+  "repository": "lil-js/all",
+  "main": "./lib/lil.js",
+  "scripts": {
+    "build": "make build"
+  },
+  "keywords": [
+    "lil",
+    "tiny",
+    "micro",
+    "library",
+    "modules",
+    "bundle"
+  ],
+  "dependencies": {
+    "lil-uri": "^0.1.0",
+    "lil-type": "^0.1.0"
+  },
+  "devDependencies": {
+    "uglify-js": "^2.4.15"
+  }
+}
+

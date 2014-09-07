@@ -1,0 +1,6 @@
+bower_components
+bower.json
+component.json
+/lil.js
+lil.min.js
+lil.min.js.map
