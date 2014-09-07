@@ -1,4 +1,4 @@
-# [lil](http://lil-js.github.io]-all
+# [lil](http://lil-js.github.io)-all
 
 <img align="center" height="150" src="http://lil-js.github.io/img/liljs-logo.png" />
 
@@ -6,7 +6,7 @@ All-in-one Lil'JS modules
 
 <table>
 <tr>
-<td><b>Name</b></td><td>lil</td>
+<td><b>Name</b></td><td>all</td>
 </tr>
 <tr>
 <td><b>Version</b></td><td>0.1.0</td>
@@ -46,7 +46,7 @@ component install lil-js/http
 
 Or loading the script remotely
 ```html
-<script src="//cdn.rawgit.com/lil-js/all/0.1.0/all.js"></script>
+<script src="//cdn.rawgit.com/lil-js/all/0.1.0/lil.js"></script>
 ```
 
 ## Environments
