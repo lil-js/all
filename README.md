@@ -41,7 +41,7 @@ bower install lil
 ```
 Via [Component](https://github.com/componentjs/component)
 ```bash
-component install lil-js/http
+component install lil-js/all
 ```
 
 Or loading the script remotely
