@@ -1,4 +1,4 @@
-# [lil](http://lil-js.github.io)-all [![Stories in Ready](https://badge.waffle.io/lil-js/all.png?label=ready&title=Ready)](https://waffle.io/lil-js/all) [![Gitter chat](https://badges.gitter.im/lil-js/all.png)](https://gitter.im/lil-js/all)
+# [lil](http://lil-js.github.io)'-all [![Stories in Ready](https://badge.waffle.io/lil-js/all.png?label=ready&title=Ready)](https://waffle.io/lil-js/all) [![Gitter chat](https://badges.gitter.im/lil-js/all.png)](https://gitter.im/lil-js/all)
 
 <img align="center" height="150" src="http://lil-js.github.io/img/liljs-logo.png" />
 
