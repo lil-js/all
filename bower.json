@@ -1,7 +1,7 @@
 {
   "name": "lil",
   "description": "All-in-one Lil'JS modules",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "license": "MIT",
   "repository": "lil-js/all",
   "author": "Tomas Aparicio",

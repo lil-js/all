@@ -9,7 +9,7 @@ All-in-one Lil'JS modules
 <td><b>Name</b></td><td>all</td>
 </tr>
 <tr>
-<td><b>Version</b></td><td>0.1.0</td>
+<td><b>Version</b></td><td>0.1.2</td>
 </tr>
 <tr>
 <td><b>Size</b></td><td>8 KB / 4 KB (gzipped)</td>
@@ -46,7 +46,7 @@ component install lil-js/all
 
 Or loading the script remotely
 ```html
-<script src="//cdn.rawgit.com/lil-js/all/0.1.0/lil.js"></script>
+<script src="//cdn.rawgit.com/lil-js/all/0.1.2/lil.js"></script>
 ```
 
 ## Environments
