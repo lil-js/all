@@ -32,7 +32,7 @@
   "devDependencies": {
     "lil-http": "~0.1.0",
     "lil-type": "~0.1.0",
-    "lil-uri": "~0.1.0"
+    "lil-uri": "~0.1.0",
+    "lil-uuid": "~0.1.0"
   }
 }
-

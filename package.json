@@ -18,11 +18,11 @@
     "bundle"
   ],
   "dependencies": {
+    "lil-type": "^0.1.0",
     "lil-uri": "^0.1.0",
-    "lil-type": "^0.1.0"
+    "lil-uuid": "^0.1.0"
   },
   "devDependencies": {
     "uglify-js": "^2.4.15"
   }
 }
-
