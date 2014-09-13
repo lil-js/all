@@ -2,7 +2,7 @@
 
 <img align="center" height="150" src="http://lil-js.github.io/img/liljs-logo.png" />
 
-All-in-one Lil'JS modules
+All-in-one Lil'JS modules bundle
 
 <table>
 <tr>
@@ -12,7 +12,7 @@ All-in-one Lil'JS modules
 <td><b>Version</b></td><td>0.1.2</td>
 </tr>
 <tr>
-<td><b>Size</b></td><td>8 KB / 4 KB (gzipped)</td>
+<td><b>Size</b></td><td>9 KB / 4 KB (gzipped)</td>
 </tr>
 <tr>
 <td><b>Environment</b></td><td>Browser</td>
@@ -24,6 +24,7 @@ All-in-one Lil'JS modules
 - [http](https://github.com/lil-js/http) - `browser only`
 - [uri](https://github.com/lil-js/uri)
 - [type](https://github.com/lil-js/type)
+- [uuid](https://github.com/lil-js/uuid)
 
 ## Installation
 
