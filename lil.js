@@ -1,6 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
+    lil.VERSION = "0.1.3";
     lil.alias = function() {
         global._ = lil;
     };
