@@ -34,5 +34,8 @@
     "lil-type": "~0.1.0",
     "lil-uri": "~0.1.0",
     "lil-uuid": "~0.1.0"
+  },
+  "dependencies": {
+    "lil-event": "~0.1.0"
   }
 }

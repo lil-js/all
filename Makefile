@@ -5,7 +5,7 @@ default: browser
 browser: uglify
 
 uglify:
-	$(UGLIFYJS) ./bower_components/lil-http/http.js ./bower_components/lil-uuid/uuid.js ./bower_components/lil-uri/uri.js ./bower_components/lil-type/type.js --beautify --preamble $(BANNER) > lil.js
+	$(UGLIFYJS) ./src/all.js ./bower_components/lil-http/http.js ./bower_components/lil-event/event.js ./bower_components/lil-uuid/uuid.js ./bower_components/lil-uri/uri.js ./bower_components/lil-type/type.js --beautify --preamble $(BANNER) > lil.js
 	$(UGLIFYJS) lil.js --mangle --preamble $(BANNER) --source-map lil.min.js.map > lil.min.js
 
 loc:
