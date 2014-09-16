@@ -9,10 +9,10 @@ All-in-one Lil'JS modules bundle
 <td><b>Name</b></td><td>all</td>
 </tr>
 <tr>
-<td><b>Version</b></td><td>0.1.2</td>
+<td><b>Version</b></td><td>0.1.3</td>
 </tr>
 <tr>
-<td><b>Size</b></td><td>9 KB / 4 KB (gzipped)</td>
+<td><b>Size</b></td><td>10 KB / 4 KB (gzipped)</td>
 </tr>
 <tr>
 <td><b>Environment</b></td><td>Browser</td>
@@ -25,6 +25,7 @@ All-in-one Lil'JS modules bundle
 - [uri](https://github.com/lil-js/uri)
 - [type](https://github.com/lil-js/type)
 - [uuid](https://github.com/lil-js/uuid)
+- [event](https://github.com/lil-js/event)
 
 ## Installation
 
@@ -47,7 +48,7 @@ component install lil-js/all
 
 Or loading the script remotely
 ```html
-<script src="//cdn.rawgit.com/lil-js/all/0.1.2/lil.js"></script>
+<script src="//cdn.rawgit.com/lil-js/all/0.1.3/lil.js"></script>
 ```
 
 ## Environments

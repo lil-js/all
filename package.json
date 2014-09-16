@@ -1,11 +1,11 @@
 {
   "name": "lil.js",
   "description": "All-in-one Lil'JS modules",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "author": "Tomas Aparicio",
   "repository": "lil-js/all",
-  "main": "./lib/lil.js",
+  "main": "./lib/lil",
   "scripts": {
     "build": "make build"
   },
@@ -15,12 +15,15 @@
     "micro",
     "library",
     "modules",
-    "bundle"
+    "bundle",
+    "all",
+    "helpers"
   ],
   "dependencies": {
     "lil-type": "^0.1.0",
     "lil-uri": "^0.1.0",
-    "lil-uuid": "^0.1.0"
+    "lil-uuid": "^0.1.0",
+    "lil-event": "^0.1.0"
   },
   "devDependencies": {
     "uglify-js": "^2.4.15"

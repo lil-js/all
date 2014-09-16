@@ -1,18 +1,20 @@
 {
   "name": "lil",
   "description": "All-in-one Lil'JS modules",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "repository": "lil-js/all",
   "author": "Tomas Aparicio",
-  "main": "./http.js",
+  "main": "./lil.js",
   "keywords": [
     "lil",
     "tiny",
     "micro",
     "library",
     "modules",
-    "bundle"
+    "bundle",
+    "all",
+    "helpers"
   ],
   "ignore": [
     "**/.*",
@@ -33,9 +35,7 @@
     "lil-http": "~0.1.0",
     "lil-type": "~0.1.0",
     "lil-uri": "~0.1.0",
-    "lil-uuid": "~0.1.0"
-  },
-  "dependencies": {
+    "lil-uuid": "~0.1.0",
     "lil-event": "~0.1.0"
   }
 }
