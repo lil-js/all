@@ -51,6 +51,15 @@ Or loading the script remotely
 <script src="//cdn.rawgit.com/lil-js/all/0.1.3/lil.js"></script>
 ```
 
+## Usage
+
+Globalization shortcut alias
+```js
+var lil = require('lil')
+lil.globalize() // expose lil as global with `_` (underscore) alias
+_.VERSION // -> '0.1.3'
+```
+
 ## Environments
 
 - Node.js
