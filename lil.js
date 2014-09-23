@@ -1,7 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.3";
+    lil.VERSION = "0.1.4";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -19,11 +19,12 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.2";
+    var VERSION = "0.1.3";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var origin = location.origin;
     var originRegex = /^(http[s]?:\/\/[a-z0-9\-\.\:]+)[\/]?/i;
+    var hasDomainRequest = typeof XDomainRequest !== "undefined";
     var defaults = {
         method: "GET",
         timeout: 30 * 1e3,
@@ -68,10 +69,10 @@
         return map;
     }
     function parseData(xhr) {
-        var data, content = xhr.getResponseHeader("Content-Type");
+        var data, contentType = xhr.getResponseHeader("Content-Type");
         if (xhr.responseType === "text") {
             data = xhr.responseText;
-            if (content === "application/json") data = JSON.parse(data);
+            if (contentType === "application/json") data = JSON.parse(data);
         } else {
             data = xhr.response;
         }
@@ -119,10 +120,8 @@
         var method = (config.method || "GET").toUpperCase();
         var auth = config.auth || {};
         var url = config.url;
-        if (isCrossOrigin(url)) {
-            if (typeof XDomainRequest !== "undefined") {
-                xhr = new XDomainRequest();
-            }
+        if (hasDomainRequest && isCrossOrigin(url)) {
+            xhr = new XDomainRequest();
         } else {
             xhr = new XMLHttpRequest();
         }
@@ -156,7 +155,8 @@
         } catch (e) {
             errorHandler(e);
         }
-        return xhr;
+        xhr = null;
+        return config;
     }
     function requestFactory(method) {
         return function(url, options, cb, progress) {
@@ -176,6 +176,7 @@
                     config.url = cur;
                 }
             }
+            if (typeof cb !== "function") throw new TypeError("Callback function argument is required");
             return request(config, cb, progress);
         };
     }
@@ -206,17 +207,16 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.0";
+    var VERSION = "0.1.2";
     var slice = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
     function Event() {}
     Event.prototype.constructor = Event;
     Event.prototype.addListener = Event.prototype.on = function(event, fn, once) {
-        var listeners = this._getListeners(event);
         if (typeof event !== "string") throw new TypeError("First argument must be a string");
         if (typeof fn !== "function") throw new TypeError("Second argument must be a function");
-        if (!this._findListener(event, fn)) {
-            listeners.push({
+        if (!findListener.call(this, event, fn)) {
+            getListeners.call(this, event).push({
                 fn: fn,
                 once: once || false
             });
@@ -225,8 +225,8 @@
     };
     Event.prototype.removeListener = Event.prototype.off = function(event, fn) {
         var index;
-        var listeners = this._getListeners(event);
-        var listener = this._findListener(event, fn);
+        var listeners = getListeners.call(this, event);
+        var listener = findListener.call(this, event, fn);
         if (listener) {
             index = listeners.indexOf(listener);
             if (index >= 0) listeners.splice(index, 1);
@@ -239,7 +239,7 @@
     };
     Event.prototype.emit = Event.prototype.fire = function(event) {
         var i, l, listener, args = slice.call(arguments).slice(1);
-        var listeners = this._getListeners(event);
+        var listeners = getListeners.call(this, event);
         if (event) {
             for (i = 0, l = listeners.length; i < l; i += 1) {
                 listener = listeners[i];
@@ -249,22 +249,26 @@
         }
         return this;
     };
-    Event.prototype._findListener = function(event, fn) {
-        var i, l, listeners = this._getListeners(event);
-        for (i = 0, l = listeners.length; i < l; i += 1) {
-            if (listeners[i].fn === fn) return listeners[i];
+    Event.prototype.removeAllListeners = Event.prototype.offAll = function(event) {
+        if (event && hasOwn.call(this._events, event)) {
+            this._events[event].splice(0);
         }
+        return this;
     };
-    Event.prototype._getListeners = function(event, fn) {
-        var events = this._getEvents();
+    function findListener(event, fn) {
+        var i, l, listener, listeners = getListeners.call(this, event);
+        for (i = 0, l = listeners.length; i < l; i += 1) {
+            listener = listeners[i];
+            if (listener.fn === fn) return listener;
+        }
+    }
+    function getListeners(event, fn) {
+        var events = getEvents.call(this);
         return hasOwn.call(events, event) ? events[event] : events[event] = [];
-    };
-    Event.prototype._getEvents = function() {
+    }
+    function getEvents() {
         return this._events || (this._events = {});
-    };
-    Event.prototype.toString = function() {
-        return "[object Event]";
-    };
+    }
     Event.VERSION = VERSION;
     exports.Event = Event;
 });
