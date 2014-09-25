@@ -1,4 +1,4 @@
-# [lil](http://lil-js.github.io)'-all [![Stories in Ready](https://badge.waffle.io/lil-js/all.png?label=ready&title=Ready)](https://waffle.io/lil-js/all) [![Gitter chat](https://badges.gitter.im/lil-js/all.png)](https://gitter.im/lil-js/all)
+# [lil](http://lil-js.github.io)'-all [![NPM version](https://badge.fury.io/js/lil.js.svg)][http://npmjs.org/package/lil.js] [![Stories in Ready](https://badge.waffle.io/lil-js/all.png?label=ready&title=Ready)](https://waffle.io/lil-js/all) [![Gitter chat](https://badges.gitter.im/lil-js/all.png)](https://gitter.im/lil-js/all)
 
 <img align="center" height="150" src="http://lil-js.github.io/img/liljs-logo.png" />
 
@@ -12,7 +12,7 @@ All-in-one Lil'JS modules bundle
 <td><b>Version</b></td><td>0.1.5</td>
 </tr>
 <tr>
-<td><b>Size</b></td><td>10 KB / 4 KB (gzipped)</td>
+<td><b>Size</b></td><td>12 KB / 4 KB (gzipped)</td>
 </tr>
 <tr>
 <td><b>Environment</b></td><td>Browser</td>
