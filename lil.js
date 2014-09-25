@@ -1,7 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.4";
+    lil.VERSION = "0.1.5";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -19,7 +19,7 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.3";
+    var VERSION = "0.1.4";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var origin = location.origin;
@@ -103,7 +103,7 @@
     function onLoad(xhr, cb) {
         return function() {
             if (xhr.readyState === 4) {
-                if (xhr.status >= 200 && xhr.status < 300) {
+                if (xhr.status >= 200 && xhr.status < 400) {
                     cb(null, buildResponse(xhr));
                 } else {
                     cb(buildResponse(xhr), null);
