@@ -19,7 +19,8 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.4";
+    "use strict";
+    var VERSION = "0.1.5";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var origin = location.origin;
@@ -160,11 +161,11 @@
     }
     function requestFactory(method) {
         return function(url, options, cb, progress) {
+            var i, l, cur = null;
             var config = extend({}, defaults, {
                 method: method
             });
             var args = slicer.call(arguments);
-            var i, cur = null;
             for (i = 0, l = args.length; i < l; i += 1) {
                 cur = args[i];
                 if (typeof cur === "function") {
@@ -207,7 +208,8 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.2";
+    "use strict";
+    var VERSION = "0.1.3";
     var slice = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
     function Event() {}
