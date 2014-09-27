@@ -1,7 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.6";
+    lil.VERSION = "0.1.7";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -20,7 +20,7 @@
     }
 })(this, function(exports) {
     "use strict";
-    var VERSION = "0.1.5";
+    var VERSION = "0.1.6";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
@@ -46,9 +46,7 @@
         var i, l, x, cur, args = slicer.call(arguments).slice(1);
         for (i = 0, l = args.length; i < l; i += 1) {
             cur = args[i];
-            for (x in cur) if (hasOwn.call(cur, x)) {
-                target[x] = cur[x];
-            }
+            for (x in cur) if (hasOwn.call(cur, x)) target[x] = cur[x];
         }
         return target;
     }
@@ -74,7 +72,7 @@
         var data, contentType = xhr.getResponseHeader("Content-Type");
         if (xhr.responseType === "text") {
             data = xhr.responseText;
-            if (contentType === "application/json") data = JSON.parse(data);
+            if (contentType === "application/json" && data) data = JSON.parse(data);
         } else {
             data = xhr.response;
         }
