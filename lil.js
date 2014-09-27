@@ -23,6 +23,7 @@
     var VERSION = "0.1.5";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
+    var hasOwn = Object.prototype.hasOwnProperty;
     var origin = location.origin;
     var originRegex = /^(http[s]?:\/\/[a-z0-9\-\.\:]+)[\/]?/i;
     var hasDomainRequest = typeof XDomainRequest !== "undefined";
@@ -45,7 +46,7 @@
         var i, l, x, cur, args = slicer.call(arguments).slice(1);
         for (i = 0, l = args.length; i < l; i += 1) {
             cur = args[i];
-            for (x in cur) if (cur.hasOwnProperty(x)) {
+            for (x in cur) if (hasOwn.call(cur, x)) {
                 target[x] = cur[x];
             }
         }
@@ -146,6 +147,7 @@
         var xhr = createClient(config);
         var data = isObj(config.data) || isArr(config.data) ? JSON.stringify(config.data) : config.data;
         var errorHandler = onError(xhr, cb);
+        var start = new Date().getTime();
         xhr.onload = onLoad(xhr, cb);
         xhr.onerror = errorHandler;
         xhr.ontimeout = errorHandler;
@@ -156,8 +158,11 @@
         } catch (e) {
             errorHandler(e);
         }
-        xhr = null;
-        return config;
+        return {
+            xhr: xhr,
+            config: config,
+            start: start
+        };
     }
     function requestFactory(method) {
         return function(url, options, cb, progress) {
@@ -177,7 +182,7 @@
                     config.url = cur;
                 }
             }
-            if (typeof cb !== "function") throw new TypeError("Callback function argument is required");
+            if (typeof cb !== "function") throw new TypeError("callback function argument is required");
             return request(config, cb, progress);
         };
     }
@@ -298,8 +303,8 @@
         var uuid = "", i, random;
         for (i = 0; i < 32; i++) {
             random = Math.random() * 16 | 0;
-            if (i == 8 || i == 12 || i == 16 || i == 20) uuid += "-";
-            uuid += (i == 12 ? 4 : i == 16 ? random & 3 | 8 : random).toString(16);
+            if (i === 8 || i === 12 || i === 16 || i === 20) uuid += "-";
+            uuid += (i === 12 ? 4 : i === 16 ? random & 3 | 8 : random).toString(16);
         }
         return uuid;
     }
