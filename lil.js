@@ -1,7 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.7";
+    lil.VERSION = "0.1.8";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -20,7 +20,7 @@
     }
 })(this, function(exports) {
     "use strict";
-    var VERSION = "0.1.6";
+    var VERSION = "0.1.7";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
@@ -87,8 +87,10 @@
         };
     }
     function buildErrorResponse(xhr, error) {
-        var response = buildResponse(xhr);
+        var response = new Error(error.message);
+        extend(response, buildResponse(xhr));
         response.error = error;
+        response.stack = error.stack;
         return response;
     }
     function onError(xhr, cb) {
@@ -145,7 +147,6 @@
         var xhr = createClient(config);
         var data = isObj(config.data) || isArr(config.data) ? JSON.stringify(config.data) : config.data;
         var errorHandler = onError(xhr, cb);
-        var start = new Date().getTime();
         xhr.onload = onLoad(xhr, cb);
         xhr.onerror = errorHandler;
         xhr.ontimeout = errorHandler;
@@ -158,8 +159,7 @@
         }
         return {
             xhr: xhr,
-            config: config,
-            start: start
+            config: config
         };
     }
     function requestFactory(method) {
@@ -176,7 +176,7 @@
                     if (cb !== cur) progress = cur;
                 } else if (isObj(cur)) {
                     extend(config, cur);
-                } else if (typeof cur === "string") {
+                } else if (typeof cur === "string" && !config.url) {
                     config.url = cur;
                 }
             }
