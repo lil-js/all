@@ -1,7 +1,7 @@
 /*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.8";
+    lil.VERSION = "0.1.9";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -20,13 +20,14 @@
     }
 })(this, function(exports) {
     "use strict";
-    var VERSION = "0.1.7";
+    var VERSION = "0.1.8";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
     var origin = location.origin;
     var originRegex = /^(http[s]?:\/\/[a-z0-9\-\.\:]+)[\/]?/i;
     var hasDomainRequest = typeof XDomainRequest !== "undefined";
+    var noop = function() {};
     var defaults = {
         method: "GET",
         timeout: 30 * 1e3,
@@ -180,8 +181,7 @@
                     config.url = cur;
                 }
             }
-            if (typeof cb !== "function") throw new TypeError("callback function argument is required");
-            return request(config, cb, progress);
+            return request(config, cb || noop, progress);
         };
     }
     function http(config, data, cb, progress) {

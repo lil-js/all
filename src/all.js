@@ -1,7 +1,7 @@
 (function (global) {
   var lil = global.lil = global.lil || {}
 
-  lil.VERSION = '0.1.8'
+  lil.VERSION = '0.1.9'
   lil.alias = lil.globalize = function () {
     global._ = lil
   }
