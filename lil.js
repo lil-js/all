@@ -1,4 +1,4 @@
-/*! lil.js - v0.1 - MIT License - https://github.com/lil-js/all */
+/*! lil.js - v0.1.10 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
     lil.VERSION = "0.1.9";
@@ -20,12 +20,13 @@
     }
 })(this, function(exports) {
     "use strict";
-    var VERSION = "0.1.8";
+    var VERSION = "0.1.10";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
     var origin = location.origin;
     var originRegex = /^(http[s]?:\/\/[a-z0-9\-\.\:]+)[\/]?/i;
+    var jsonMimeRegex = /application\/json/;
     var hasDomainRequest = typeof XDomainRequest !== "undefined";
     var noop = function() {};
     var defaults = {
@@ -38,10 +39,7 @@
         responseType: "text"
     };
     function isObj(o) {
-        return o && toStr.call(o) === "[object Object]";
-    }
-    function isArr(o) {
-        return o && toStr.call(o) === "[object Array]";
+        return o && toStr.call(o) === "[object Object]" || false;
     }
     function extend(target) {
         var i, l, x, cur, args = slicer.call(arguments).slice(1);
@@ -54,26 +52,37 @@
     function setHeaders(xhr, headers) {
         if (isObj(headers)) {
             headers["Content-Type"] = headers["Content-Type"] || http.defaultContent;
-            for (var field in headers) {
+            for (var field in headers) if (hasOwn.call(headers, field)) {
                 xhr.setRequestHeader(field, headers[field]);
             }
         }
     }
     function getHeaders(xhr) {
-        var map = {}, headers = xhr.getAllResponseHeaders().split("\n");
-        headers.forEach(function(header) {
-            if (header) {
-                header = header.split(":");
-                map[header[0].trim()] = (header[1] || "").trim();
-            }
+        var headers = {}, rawHeaders = xhr.getAllResponseHeaders().trim().split("\n");
+        rawHeaders.forEach(function(header) {
+            var split = header.trim().split(":");
+            var key = split.shift().trim();
+            var value = split.join(":").trim();
+            headers[key] = value;
         });
-        return map;
+        return headers;
+    }
+    function isJSONResponse(xhr) {
+        return jsonMimeRegex.test(xhr.getResponseHeader("Content-Type"));
+    }
+    function encodeParams(params) {
+        return Object.getOwnPropertyNames(params).filter(function(name) {
+            return params[name] !== undefined;
+        }).map(function(name) {
+            var value = params[name] === null ? "" : params[name];
+            return encodeURIComponent(name) + (value ? "=" + encodeURIComponent(value) : "");
+        }).join("&").replace(/%20/g, "+");
     }
     function parseData(xhr) {
-        var data, contentType = xhr.getResponseHeader("Content-Type");
+        var data;
         if (xhr.responseType === "text") {
             data = xhr.responseText;
-            if (contentType === "application/json" && data) data = JSON.parse(data);
+            if (isJSONResponse(xhr) && data) data = JSON.parse(data);
         } else {
             data = xhr.response;
         }
@@ -106,6 +115,7 @@
     function onLoad(xhr, cb) {
         return function() {
             if (xhr.readyState === 4) {
+                if (xhr.status === 1223) status = 204;
                 if (xhr.status >= 200 && xhr.status < 400) {
                     cb(null, buildResponse(xhr));
                 } else {
@@ -118,16 +128,25 @@
         var match = url.match(originRegex);
         return match && match[1] === origin;
     }
+    function getURL(config) {
+        var url = config.url;
+        if (isObj(config.params)) {
+            url += (url.indexOf("?") === -1 ? "?" : "&") + encodeParams(config.params);
+        }
+        return url;
+    }
+    function XHRFactory(url) {
+        if (hasDomainRequest && isCrossOrigin(url)) {
+            return new XDomainRequest();
+        } else {
+            return new XMLHttpRequest();
+        }
+    }
     function createClient(config) {
-        var xhr = null;
         var method = (config.method || "GET").toUpperCase();
         var auth = config.auth || {};
-        var url = config.url;
-        if (hasDomainRequest && isCrossOrigin(url)) {
-            xhr = new XDomainRequest();
-        } else {
-            xhr = new XMLHttpRequest();
-        }
+        var url = getURL(config);
+        var xhr = XHRFactory(url);
         xhr.open(method, url, config.async, auth.user, auth.password);
         xhr.withCredentials = config.withCredentials;
         xhr.responseType = config.responseType;
@@ -146,7 +165,7 @@
     }
     function request(config, cb, progress) {
         var xhr = createClient(config);
-        var data = isObj(config.data) || isArr(config.data) ? JSON.stringify(config.data) : config.data;
+        var data = isObj(config.data) || Array.isArray(config.data) ? JSON.stringify(config.data) : config.data;
         var errorHandler = onError(xhr, cb);
         xhr.onload = onLoad(xhr, cb);
         xhr.onerror = errorHandler;
@@ -328,23 +347,22 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.0";
+    "use strict";
+    var VERSION = "0.1.2";
     var REGEX = /^(?:([^:\/?#]+):\/\/)?((?:([^\/?#@]*)@)?([^\/?#:]*)(?:\:(\d*))?)?([^?#]*)(?:\?([^#]*))?(?:#((?:.|\n)*))?/i;
     function isStr(o) {
         return typeof o === "string";
     }
     function mapSearchParams(search) {
         var map = {};
-        if (search) {
+        if (typeof search === "string") {
             search.split("&").forEach(function(values) {
-                if (values) {
-                    values = values.split("=");
-                    if (map.hasOwnProperty(values[0])) {
-                        map[values[0]] = Array.isArray(map[values[0]]) ? map[values[0]] : [ map[values[0]] ];
-                        map[values[0]].push(values[1]);
-                    } else {
-                        map[values[0]] = values[1];
-                    }
+                values = values.split("=");
+                if (map.hasOwnProperty(values[0])) {
+                    map[values[0]] = Array.isArray(map[values[0]]) ? map[values[0]] : [ map[values[0]] ];
+                    map[values[0]].push(values[1]);
+                } else {
+                    map[values[0]] = values[1];
                 }
             });
             return map;
@@ -427,7 +445,9 @@
         var p = this.parts, buf = [];
         if (p.protocol) buf.push(p.protocol + "://");
         if (p.auth) buf.push(p.auth + "@"); else if (p.user) buf.push(p.user + (p.password ? ":" + p.password : "") + "@");
-        if (p.host) buf.push(p.host); else {
+        if (p.host) {
+            buf.push(p.host);
+        } else {
             if (p.hostname) buf.push(p.hostname);
             if (p.port) buf.push(":" + p.port);
         }
@@ -457,7 +477,12 @@
     function uri(uri) {
         return new URI(uri);
     }
+    function isURL(uri) {
+        return typeof uri === "string" && REGEX.test(uri);
+    }
     uri.VERSION = VERSION;
+    uri.is = uri.isURL = isURL;
+    uri.URI = URI;
     exports.uri = uri;
 });
 
