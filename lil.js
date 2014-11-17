@@ -1,11 +1,11 @@
 /*! lil.js - v0.1.10 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.9";
+    lil.VERSION = "0.1.10";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
-})(this);
+})(window);
 
 (function(root, factory) {
     if (typeof define === "function" && define.amd) {
