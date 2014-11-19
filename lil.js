@@ -1,7 +1,7 @@
-/*! lil.js - v0.1.10 - MIT License - https://github.com/lil-js/all */
+/*! lil.js - v0.1.11 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.10";
+    lil.VERSION = "0.1.11";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -20,7 +20,7 @@
     }
 })(this, function(exports) {
     "use strict";
-    var VERSION = "0.1.10";
+    var VERSION = "0.1.11";
     var toStr = Object.prototype.toString;
     var slicer = Array.prototype.slice;
     var hasOwn = Object.prototype.hasOwnProperty;
@@ -33,8 +33,8 @@
         method: "GET",
         timeout: 30 * 1e3,
         auth: null,
+        data: null,
         headers: null,
-        async: true,
         withCredentials: false,
         responseType: "text"
     };
@@ -79,7 +79,7 @@
         }).join("&").replace(/%20/g, "+");
     }
     function parseData(xhr) {
-        var data;
+        var data = null;
         if (xhr.responseType === "text") {
             data = xhr.responseText;
             if (isJSONResponse(xhr) && data) data = JSON.parse(data);
@@ -89,12 +89,17 @@
         return data;
     }
     function buildResponse(xhr) {
-        return {
+        var response = {
             xhr: xhr,
             status: xhr.status,
-            data: parseData(xhr),
-            headers: getHeaders(xhr)
+            data: null,
+            headers: {}
         };
+        if (xhr.readyState === 4) {
+            response.data = parseData(xhr);
+            response.headers = getHeaders(xhr);
+        }
+        return response;
     }
     function buildErrorResponse(xhr, error) {
         var response = new Error(error.message);
@@ -144,10 +149,14 @@
     }
     function createClient(config) {
         var method = (config.method || "GET").toUpperCase();
-        var auth = config.auth || {};
+        var auth = config.auth;
         var url = getURL(config);
         var xhr = XHRFactory(url);
-        xhr.open(method, url, config.async, auth.user, auth.password);
+        if (auth) {
+            xhr.open(method, url, true, auth.user, auth.password);
+        } else {
+            xhr.open(method, url);
+        }
         xhr.withCredentials = config.withCredentials;
         xhr.responseType = config.responseType;
         xhr.timeout = config.timeout;

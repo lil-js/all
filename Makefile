@@ -1,4 +1,4 @@
-VERSION = 0.1.10
+VERSION = 0.1.11
 UGLIFYJS = ./node_modules/.bin/uglifyjs
 BANNER = "/*! lil.js - v$(VERSION) - MIT License - https://github.com/lil-js/all */"
 
