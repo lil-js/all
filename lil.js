@@ -1,7 +1,7 @@
-/*! lil.js - v0.1.12 - MIT License - https://github.com/lil-js/all */
+/*! lil.js - v0.1.13 - MIT License - https://github.com/lil-js/all */
 (function(global) {
     var lil = global.lil = global.lil || {};
-    lil.VERSION = "0.1.12";
+    lil.VERSION = "0.1.13";
     lil.alias = lil.globalize = function() {
         global._ = lil;
     };
@@ -556,13 +556,14 @@
         factory(root.lil = root.lil || {});
     }
 })(this, function(exports) {
-    var VERSION = "0.1.1";
+    "use strict";
+    var VERSION = "0.1.2";
     var toStr = Object.prototype.toString;
     var nativeIsFinite = isFinite;
     var nativeIsArray = Array.isArray;
     var keys = Object.keys;
     var binaryRegex = /[U]?Int|Float[0-9]{1,2}Array\]$/i;
-    var types = [ "Boolean", "NaN", "Number", "String", "Null", "Undefined", "RegExp", "Date", "Function", "Symbol", "Arguments", "Error", "Array", "Element", "Generator", "Map", "Binary", "Object" ];
+    var types = [ "Boolean", "NaN", "Number", "String", "Null", "Undefined", "RegExp", "Date", "Function", "Symbol", "Arguments", "Error", "Array", "Element", "Generator", "Map", "WeakMap", "WeakSet", "Binary", "Object" ];
     exports.type = {
         VERSION: VERSION
     };
@@ -623,9 +624,16 @@
         return o && toStr.call(o).indexOf("Error") !== -1 || false;
     }
     exports.isError = isError;
-    exports.isMap = function isMap(o) {
+    var isMap = exports.isMap = function isMap(o) {
         return o && toStr.call(o) === "[object Map]" || false;
     };
+    var isWeakMap = exports.isWeakMap = isMapType("WeakMap");
+    var isWeakSet = exports.isWeakSet = isMapType("WeakSet");
+    function isMapType(type) {
+        return function isMapType(o) {
+            return o && toStr.call(o) === "[object " + type + "]" || false;
+        };
+    }
     exports.isPromise = function isPromise(o) {
         return isObject(o) && isFn(o.then) || false;
     };
@@ -672,7 +680,7 @@
         return isObject(o) || isArray(o) || isError(o) || isArguments(o) || isDate(o) || isFn(o) || false;
     };
     exports.isIterable = function isIterable(o) {
-        return isObject(o) || isArray(o) || isArguments(o) || false;
+        return isObject(o) || isArray(o) || isArguments(o) || isMap(o) || isWeakMap(o) || isWeakSet(o) || false;
     };
     exports.isPrimitive = function(o) {
         return isBool(o) || isString(o) || isNumber(o) || isFn(o) || isNull(o) || isUndefined(o) || isRegExp(o) || isSymbol(o) || false;
